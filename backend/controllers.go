@@ -161,3 +161,37 @@ func NoteUnpin(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Print("Note Unpinned")
 }
+func NoteFeature(w http.ResponseWriter, r *http.Request) {
+	noteIDStr := r.URL.Query().Get("note_id")
+	if noteIDStr == "" {
+		http.Error(w, "missing note_id", http.StatusBadRequest)
+		return
+	}
+	noteID, err := strconv.Atoi(noteIDStr)
+	if err != nil {
+		http.Error(w, "invalid note_id", http.StatusBadRequest)
+		return
+	}
+	if err := FeatureNote(noteID); err != nil {
+		log.Println("Note feature Error")
+		return
+	}
+	log.Print("Note featured")
+}
+func NoteUnfeature(w http.ResponseWriter, r *http.Request) {
+	noteIDStr := r.URL.Query().Get("note_id")
+	if noteIDStr == "" {
+		http.Error(w, "missing note_id", http.StatusBadRequest)
+		return
+	}
+	noteID, err := strconv.Atoi(noteIDStr)
+	if err != nil {
+		http.Error(w, "invalid note_id", http.StatusBadRequest)
+		return
+	}
+	if err := UnfeatureNote(noteID); err != nil {
+		log.Println("Note unfeature Error")
+		return
+	}
+	log.Print("Note unfeatured")
+}

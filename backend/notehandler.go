@@ -83,15 +83,30 @@ func PinNote(nid int) error {
 		WHERE id = $1
 	`
 	_, err := DB.Exec(query, nid)
-	if err != nil {
-		return err
-	}
 	return err
 }
 func UnpinNote(nid int) error {
 	query := `
 		UPDATE notes
 		SET pinned = FALSE
+		WHERE id = $1
+	`
+	_, err := DB.Exec(query, nid)
+	return err
+}
+func FeatureNote(nid int) error {
+	query := `
+		UPDATE notes
+		SET featured = TRUE
+		WHERE id = $1
+	`
+	_, err := DB.Exec(query, nid)
+	return err
+}
+func UnfeatureNote(nid int) error {
+	query := `
+		UPDATE notes
+		SET featured = FALSE
 		WHERE id = $1
 	`
 	_, err := DB.Exec(query, nid)
