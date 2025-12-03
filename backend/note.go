@@ -26,6 +26,3 @@ type NoteUpdateRequest struct {
 	Title   string `json:"title"`
 	Content string `json:"content"`
 }
-type NoteIdRequest struct {
-	ID int `json:"id"`
-}
