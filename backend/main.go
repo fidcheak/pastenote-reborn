@@ -42,5 +42,8 @@ func main() {
 	r.Put("/note-update", NoteUpdate)
 	r.Delete("/note-delete", NoteDelete)
 
+	r.Put("/note-pin", NotePin)
+	r.Put("/note-unpin", NoteUnpin)
+
 	http.ListenAndServe(":8080", r)
 }

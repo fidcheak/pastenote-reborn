@@ -60,6 +60,8 @@ func InitTables(DB *sql.DB) error {
 			content text,
 			user_id int references users(id),
 			folder_id int references folders(id) default null,
+			pinned boolean not null default false,
+			featured boolean not null default false,
 			created_at timestamp default current_timestamp
 		)`,
 	}

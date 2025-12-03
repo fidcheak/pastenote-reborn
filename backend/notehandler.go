@@ -21,7 +21,7 @@ func AddNote(n NewNote) error {
 func GetNotes(uid int) []NoteResponse {
 	var notes []NoteResponse
 	query := `
-		SELECT id, title, content, folder_id, created_at
+		SELECT id, title, content, folder_id, pinned, featured, created_at
 		FROM notes
 		WHERE user_id = $1
 	`
@@ -40,6 +40,8 @@ func GetNotes(uid int) []NoteResponse {
 			&nr.Title,
 			&nr.Content,
 			&nr.FolderID,
+			&nr.Pinned,
+			&nr.Featured,
 			&nr.CreatedAt,
 		); err != nil {
 			log.Printf("GetNotes Error %v", err)
@@ -69,6 +71,27 @@ func UpdateNote(nu NoteUpdateRequest) error {
 func DeleteNote(nid int) error {
 	query := `
 		DELETE FROM notes
+		WHERE id = $1
+	`
+	_, err := DB.Exec(query, nid)
+	return err
+}
+func PinNote(nid int) error {
+	query := `
+		UPDATE notes
+		SET pinned = TRUE
+		WHERE id = $1
+	`
+	_, err := DB.Exec(query, nid)
+	if err != nil {
+		return err
+	}
+	return err
+}
+func UnpinNote(nid int) error {
+	query := `
+		UPDATE notes
+		SET pinned = FALSE
 		WHERE id = $1
 	`
 	_, err := DB.Exec(query, nid)

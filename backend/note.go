@@ -19,6 +19,8 @@ type NoteResponse struct {
 	Title     string        `json:"title"`
 	Content   string        `json:"content"`
 	FolderID  sql.NullInt64 `json:"folder_id"`
+	Pinned    bool          `json:"pinned"`
+	Featured  bool          `json:"featured"`
 	CreatedAt string        `json:"created_at"`
 }
 type NoteUpdateRequest struct {
